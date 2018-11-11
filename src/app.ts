@@ -5,13 +5,15 @@ import { graphqlServer } from './graphql';
 
 export const app = new Koa();
 
-app.on('error', () => {});
+app.on('error', () => {
+  // disable default error logging
+});
 
 app.use(koaBunyanLogger());
 // todo upstream typings
-//@ts-ignore
+// @ts-ignore
 app.use(koaBunyanLogger.requestIdContext());
-//@ts-ignore
+// @ts-ignore
 app.use(koaBunyanLogger.requestLogger());
 
 app.use((ctx, next) => {

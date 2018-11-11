@@ -6,7 +6,10 @@
   "scripts": {
     "build": "npm run build-ts",
     "build-ts": "tsc",
+    "eslint": "eslint src --ext ts --cache",
+    "eslint-fix": "npm run eslint -- --fix",
     "start": "node dist/server.js",
+    "test": "npm run eslint",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
     "watch-ts": "tsc -w",
     "watch-node": "nodemon dist/server.js | bunyan"
@@ -36,8 +39,15 @@
     "@types/node": "^10.12.3",
     "@types/uuid": "^3.4.4",
     "concurrently": "^4.0.1",
+    "eslint": "^5.9.0",
+    "eslint-config-cheminfo": "^1.18.0",
+    "eslint-config-cheminfo-typescript": "^1.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^22.0.0",
+    "eslint-plugin-typescript": "^0.13.0",
     "nodemon": "^1.18.6",
     "ts-node": "^7.0.1",
-    "typescript": "^3.1.6"
+    "typescript": "^3.1.6",
+    "typescript-eslint-parser": "^20.1.1"
   }
 }
