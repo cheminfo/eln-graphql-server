@@ -6,13 +6,15 @@
   "scripts": {
     "build": "npm run build-ts",
     "build-ts": "tsc",
+    "debug": "npm run build-ts && npm run serve-debug",
     "eslint": "eslint src --ext ts --cache",
     "eslint-fix": "npm run eslint -- --fix",
+    "serve-debug": "cross-env REST_ON_COUCH_HOME_DIR=test-home node --inspect dist/server.js",
     "start": "node dist/server.js",
     "test": "npm run eslint",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
-    "watch-ts": "tsc -w",
-    "watch-node": "nodemon dist/server.js | bunyan"
+    "watch-node": "cross-env REST_ON_COUCH_HOME_DIR=test-home nodemon dist/server.js | bunyan",
+    "watch-ts": "tsc -w"
   },
   "repository": {
     "type": "git",
@@ -23,22 +25,28 @@
   },
   "homepage": "https://github.com/cheminfo/eln-graphql-server#readme",
   "dependencies": {
-    "@types/graphql": "^14.0.3",
     "apollo-server-koa": "^2.0.0-rc.12",
     "bunyan": "^1.8.12",
     "graphql": "^14.0.2",
     "koa": "^2.6.2",
     "koa-bunyan-logger": "^2.1.0",
+    "koa-passport": "^4.1.1",
+    "koa-session": "^5.10.0",
     "make-promises-safe": "^3.0.0",
     "rest-on-couch": "^6.0.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@types/graphql": "^14.0.3",
     "@types/koa": "^2.0.46",
     "@types/koa-bunyan-logger": "^2.0.0",
+    "@types/koa-passport": "^4.0.2",
+    "@types/koa-session": "^5.7.4",
     "@types/node": "^10.12.3",
     "@types/uuid": "^3.4.4",
+    "apollo-server-core": "^2.2.2",
     "concurrently": "^4.0.1",
+    "cross-env": "^5.2.0",
     "eslint": "^5.9.0",
     "eslint-config-cheminfo": "^1.18.0",
     "eslint-config-cheminfo-typescript": "^1.0.1",

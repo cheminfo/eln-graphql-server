@@ -1,3 +1,7 @@
+type Sample {
+  id: ID
+}
+
 type Query {
-  hello: String
+  sample(id: ID): Sample
 }

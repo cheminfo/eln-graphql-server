@@ -10,7 +10,8 @@
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
-    }
+    },
+    "strictFunctionTypes": false // See https://github.com/apollographql/graphql-tools/issues/704
   },
   "include": ["src/**/*"]
 }
