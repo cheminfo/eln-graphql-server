@@ -33,7 +33,7 @@
     "koa-passport": "^4.1.1",
     "koa-session": "^5.10.0",
     "make-promises-safe": "^3.0.0",
-    "rest-on-couch": "^6.0.0",
+    "rest-on-couch": "github:cheminfo/rest-on-couch#prepare-graphql",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
