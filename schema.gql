@@ -1,7 +1,63 @@
+type User {
+  id: ID!
+  email: String!
+}
+
+type StockPlate {
+  rows: Int!
+  cols: Int!
+  format: String!
+}
+
+type StockLocation {
+  location: String!
+  plate: StockPlate
+  # todo: use an enum?
+  # possible values: https://github.com/cheminfo-js/visualizer-helper/blob/master/eln/StockHelper.js
+  status: Int!
+  date: String!
+  user: User!
+}
+
+type Stock {
+  supplier: String
+  description: String
+  catalogNumber: String
+  qty: String
+  currentLocation: StockLocation
+  history: [StockLocation]!
+}
+
 type Sample {
   id: ID
+  creationDate: String!
+  modificationDate: String!
+  stock: Stock
+}
+
+input StockPlateInput {
+  rows: Int!
+  cols: Int!
+  format: String!
+}
+
+input ChangeStockLocationInput {
+  location: String!
+  plate: StockPlateInput
+  status: Int!
+}
+
+type ChangeStockLocationPayload {
+  location: StockLocation!
 }
 
 type Query {
-  sample(id: ID): Sample
+  sample(id: ID!): Sample
+}
+
+type Mutation {
+  changeStockLocation(
+    id: ID!
+    input: ChangeStockLocationInput
+  ): ChangeStockLocationPayload
 }

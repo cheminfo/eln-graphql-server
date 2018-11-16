@@ -60,4 +60,8 @@ declare module 'rest-on-couch' {
     filePath: string,
     options?: IImportOptions
   ): Promise<IImportResult>;
+
+  class CouchError extends Error {
+    reason: string;
+  }
 }
