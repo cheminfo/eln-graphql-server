@@ -4,8 +4,6 @@ import session from 'koa-session';
 import passport from 'koa-passport';
 import { globalConfig as config } from 'rest-on-couch';
 
-import { graphqlServer } from './graphql';
-
 export const app = new Koa();
 
 app.on('error', () => {
@@ -50,5 +48,3 @@ app.use((ctx, next) => {
   }
   return next();
 });
-
-graphqlServer.applyMiddleware({ app });

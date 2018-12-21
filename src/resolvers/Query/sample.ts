@@ -1,18 +1,17 @@
 import { IFieldResolver } from 'apollo-server-koa';
 
-import { IGraphqlContext } from '../../types';
-import { eln } from '../../eln';
+import { IGraphQLContext } from '../../types';
 import { Sample } from '../Sample';
 
-interface ISampleQuery {
+export interface ISampleQuery {
   id: string;
 }
 
 export const sample: IFieldResolver<
 null,
-IGraphqlContext,
+IGraphQLContext,
 ISampleQuery
 > = async (_, query, context): Promise<Sample> => {
-  const entry = await eln.getEntry(query.id, context.userEmail);
+  const entry = await context.eln.getEntry(query.id, context.userEmail);
   return new Sample(entry);
 };

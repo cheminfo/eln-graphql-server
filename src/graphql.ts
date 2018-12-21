@@ -2,39 +2,60 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 
 import { Context } from 'koa';
-import { ApolloServer, gql } from 'apollo-server-koa';
+import {
+  ApolloServer,
+  makeExecutableSchema,
+  mergeSchemas,
+  IResolvers
+} from 'apollo-server-koa';
 import { ContextFunction } from 'apollo-server-core';
+import { GraphQLSchema } from 'graphql';
 
 import Query from './resolvers/Query/Query';
-import { IGraphqlContext } from './types';
+import { IGraphQLContext } from './types';
+import { eln } from './eln';
 
-const schema = readFileSync(join(__dirname, '../schema.gql'), 'utf8');
-const typeDefs = gql(schema);
+export interface IGraphQLConfig {
+  schemas?: GraphQLSchema[];
+  resolvers?: IResolvers;
+}
 
-// Provide resolver functions for your schema fields
-const resolvers = {
+const mainResolvers = {
   Query
 };
 
-const context: ContextFunction = async (app): Promise<IGraphqlContext> => {
+const mainSchemaStr = readFileSync(join(__dirname, '../schema.gql'), 'utf8');
+export const mainSchema = makeExecutableSchema({
+  typeDefs: mainSchemaStr,
+  resolvers: mainResolvers
+});
+
+const context: ContextFunction = async (app): Promise<IGraphQLContext> => {
   const ctx: Context = app.ctx;
   let userEmail = 'anonymous';
   if (ctx.session && ctx.isAuthenticated()) {
     userEmail = ctx.session.passport.email;
   }
   return {
+    eln,
     userEmail
   };
 };
 
-export const graphqlServer = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context,
-  // @ts-ignore
-  playground: {
-    settings: {
-      'request.credentials': 'include'
+export function createGraphqlServer(config: IGraphQLConfig) {
+  const schema = mergeSchemas({
+    schemas: [mainSchema, ...(config.schemas || [])],
+    resolvers: config.resolvers
+  });
+  const graphqlServer = new ApolloServer({
+    schema,
+    context,
+    // @ts-ignore
+    playground: {
+      settings: {
+        'request.credentials': 'include'
+      }
     }
-  }
-});
+  });
+  return graphqlServer;
+}

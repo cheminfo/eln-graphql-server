@@ -5,9 +5,10 @@
     "target": "esnext",
     "strict": true,
     "moduleResolution": "node",
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "dist",
     "baseUrl": ".",
+    "declaration": true,
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
     },

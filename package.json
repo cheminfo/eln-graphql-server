@@ -3,18 +3,17 @@
   "name": "eln-graphql-server",
   "version": "1.0.0",
   "description": "GraphQL server for ELN data",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "npm run build-ts",
-    "build-ts": "tsc",
-    "debug": "npm run build-ts && npm run serve-debug",
+    "build": "npm run clean && npm run tsc",
+    "clean": "rimraf dist",
+    "dev": "cross-env REST_ON_COUCH_HOME_DIR=test-home nodemon --watch src --watch test-home --watch test-server -e ts --exec \"ts-node test-server/server.ts\" | bunyan",
+    "debug": "cross-env REST_ON_COUCH_HOME_DIR=test-home node --inspect -r ts-node/register test-server/server.ts | bunyan",
     "eslint": "eslint src --ext ts --cache",
     "eslint-fix": "npm run eslint -- --fix",
-    "serve-debug": "cross-env REST_ON_COUCH_HOME_DIR=test-home node --inspect dist/server.js",
     "start": "node dist/server.js",
     "test": "npm run eslint",
-    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
-    "watch-node": "cross-env REST_ON_COUCH_HOME_DIR=test-home nodemon dist/server.js | bunyan",
-    "watch-ts": "tsc -w"
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",
@@ -45,7 +44,6 @@
     "@types/koa-session": "^5.7.4",
     "@types/node": "^10.12.18",
     "@types/uuid": "^3.4.4",
-    "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.10.0",
     "eslint-config-cheminfo": "^1.19.1",
@@ -54,6 +52,7 @@
     "eslint-plugin-jest": "^22.1.2",
     "eslint-plugin-typescript": "^0.14.0",
     "nodemon": "^1.18.9",
+    "rimraf": "^2.6.2",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.2",
     "typescript-eslint-parser": "^17.0.1"
