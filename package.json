@@ -11,6 +11,7 @@
     "debug": "cross-env REST_ON_COUCH_HOME_DIR=test-home node --inspect -r ts-node/register test-server/server.ts | bunyan",
     "eslint": "eslint src --ext ts --cache",
     "eslint-fix": "npm run eslint -- --fix",
+    "prepare": "npm run build",
     "start": "node dist/server.js",
     "test": "npm run eslint",
     "tsc": "tsc"
