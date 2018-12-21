@@ -16,12 +16,6 @@ app.use(koaBunyanLogger());
 // todo upstream typings
 // @ts-ignore
 app.use(koaBunyanLogger.requestIdContext());
-// app.use(
-//   // @ts-ignore
-//   koaBunyanLogger.requestLogger({
-//     ignorePaths: ['/favicon.ico']
-//   })
-// );
 
 app.keys = config.keys!;
 app.use(
