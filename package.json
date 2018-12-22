@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "GraphQL server for ELN data",
   "files": [
-    "dist"
+    "dist",
+    "schema.gql"
   ],
   "main": "dist/index.js",
   "scripts": {
