@@ -1,8 +1,10 @@
 {
-  "private": true,
-  "name": "eln-graphql-server",
-  "version": "1.0.0",
+  "name": "@cheminfo/eln-graphql-server",
+  "version": "0.0.0",
   "description": "GraphQL server for ELN data",
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.js",
   "scripts": {
     "build": "npm run clean && npm run tsc",
@@ -11,7 +13,7 @@
     "debug": "cross-env REST_ON_COUCH_HOME_DIR=test-home node --inspect -r ts-node/register test-server/server.ts | bunyan",
     "eslint": "eslint src --ext ts --cache",
     "eslint-fix": "npm run eslint -- --fix",
-    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
     "test": "npm run eslint",
     "tsc": "tsc"
   },
