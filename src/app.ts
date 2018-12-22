@@ -2,6 +2,7 @@ import Koa from 'koa';
 import koaBunyanLogger from 'koa-bunyan-logger';
 import session from 'koa-session';
 import passport from 'koa-passport';
+import cors from 'kcors';
 import { globalConfig as config } from 'rest-on-couch';
 
 export const app = new Koa();
@@ -14,6 +15,20 @@ app.use(koaBunyanLogger());
 // todo upstream typings
 // @ts-ignore
 app.use(koaBunyanLogger.requestIdContext());
+
+const allowedOrigins = config.allowedOrigins || [];
+app.use(cors({
+  origin: (ctx) => {
+    const origin = ctx.get('Origin');
+    for (var i = 0; i < allowedOrigins.length; i++) {
+      if (allowedOrigins[i] === origin) {
+        return origin;
+      }
+    }
+    return '*';
+  },
+  credentials: true
+}));
 
 app.keys = config.keys!;
 app.use(
