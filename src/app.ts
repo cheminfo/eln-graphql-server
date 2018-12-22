@@ -7,28 +7,26 @@ import { globalConfig as config } from 'rest-on-couch';
 
 export const app = new Koa();
 
-app.on('error', () => {
-  // disable default error logging
-});
-
 app.use(koaBunyanLogger());
 // todo upstream typings
 // @ts-ignore
 app.use(koaBunyanLogger.requestIdContext());
 
 const allowedOrigins = config.allowedOrigins || [];
-app.use(cors({
-  origin: (ctx) => {
-    const origin = ctx.get('Origin');
-    for (var i = 0; i < allowedOrigins.length; i++) {
-      if (allowedOrigins[i] === origin) {
-        return origin;
+app.use(
+  cors({
+    origin: (ctx) => {
+      const origin = ctx.get('Origin');
+      for (var i = 0; i < allowedOrigins.length; i++) {
+        if (allowedOrigins[i] === origin) {
+          return origin;
+        }
       }
-    }
-    return '*';
-  },
-  credentials: true
-}));
+      return '*';
+    },
+    credentials: true
+  })
+);
 
 app.keys = config.keys!;
 app.use(

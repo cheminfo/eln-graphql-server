@@ -34,7 +34,7 @@ const context: ContextFunction = async (app): Promise<IGraphQLContext> => {
   const ctx: Context = app.ctx;
   let userEmail = 'anonymous';
   if (ctx.session && ctx.isAuthenticated()) {
-    userEmail = ctx.session.passport.email;
+    userEmail = ctx.session.passport.user.email;
   }
   return {
     eln,
